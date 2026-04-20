@@ -1,0 +1,20 @@
+{
+  "name": "ai-ready-sdlc",
+  "description": "Organization standards workflows for AI-ready engineering in Augment.",
+  "version": "0.1.0",
+  "author": {
+    "name": "AI SDLC Standards Team",
+    "email": "standards@example.com"
+  },
+  "license": "Proprietary",
+  "keywords": [
+    "ai",
+    "sdlc",
+    "quality",
+    "governance",
+    "standards",
+    "security",
+    "project-codeguard",
+    "augment"
+  ]
+}

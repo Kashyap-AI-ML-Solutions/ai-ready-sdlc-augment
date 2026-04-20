@@ -1,0 +1,19 @@
+language: ansible
+detect:
+  extensions: [".yml", ".yaml"]
+  files: ["ansible.cfg"]
+  paths: ["playbooks", "roles", "collections"]
+required_tools:
+  - tool: ansible-lint
+    category: code_quality
+    command: ansible-lint .
+  - tool: yamllint
+    category: style
+    command: yamllint .
+  - tool: checkov
+    category: security
+    command: checkov -d .
+optional_tools:
+  - tool: ansible-playbook
+    category: syntax
+    command: ansible-playbook --syntax-check <playbook>

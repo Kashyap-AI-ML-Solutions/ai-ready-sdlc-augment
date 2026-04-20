@@ -1,0 +1,21 @@
+language: python
+detect:
+  extensions: [".py"]
+  files: ["pyproject.toml", "requirements.txt", "setup.py"]
+required_tools:
+  - tool: pylint
+    category: code_quality
+    command: pylint <targets>
+  - tool: bandit
+    category: security
+    command: bandit -r <targets>
+  - tool: radon
+    category: complexity
+    command: radon cc -s <targets>
+optional_tools:
+  - tool: mypy
+    category: quality
+    command: mypy <targets>
+  - tool: ruff
+    category: style
+    command: ruff check <targets>

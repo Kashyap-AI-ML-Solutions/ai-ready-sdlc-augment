@@ -1,0 +1,21 @@
+language: javascript-typescript
+detect:
+  extensions: [".js", ".jsx", ".ts", ".tsx"]
+  files: ["package.json", "tsconfig.json"]
+required_tools:
+  - tool: eslint
+    category: code_quality
+    command: npx eslint .
+  - tool: tsc
+    category: code_quality
+    command: npx tsc --noEmit
+  - tool: npm-audit
+    category: security
+    command: npm audit --json
+optional_tools:
+  - tool: prettier
+    category: style
+    command: npx prettier --check .
+  - tool: semgrep
+    category: security
+    command: semgrep --config auto .

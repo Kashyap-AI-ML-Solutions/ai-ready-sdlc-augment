@@ -1,0 +1,12 @@
+{
+  "coverage": {
+    "repository_min_percent": 80,
+    "changed_lines_min_percent": 90,
+    "critical_paths_min_percent": 95,
+    "notes": [
+      "Repository-wide line coverage should be at least 80%.",
+      "Changed-lines coverage should be at least 90% when diff-aware tooling is available.",
+      "Critical paths should target at least 95% coverage or documented exception handling."
+    ]
+  }
+}

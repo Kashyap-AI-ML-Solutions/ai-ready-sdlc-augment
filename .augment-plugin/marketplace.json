@@ -1,0 +1,22 @@
+{
+  "name": "ai-ready-sdlc-augment",
+  "description": "Auggie marketplace for the AI Ready SDLC standards plugin.",
+  "version": "0.1.0",
+  "plugins": [
+    {
+      "name": "ai-ready-sdlc",
+      "description": "Organization standards workflows for AI-ready engineering in Augment.",
+      "version": "0.1.0",
+      "source": "./plugins/ai-ready-sdlc",
+      "category": "productivity",
+      "tags": [
+        "ai",
+        "sdlc",
+        "security",
+        "quality",
+        "project-codeguard",
+        "augment"
+      ]
+    }
+  ]
+}

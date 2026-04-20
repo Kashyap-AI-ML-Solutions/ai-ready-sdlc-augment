@@ -1,0 +1,82 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Project CodeGuard Security Report
+type: object
+required:
+  - profile
+  - repository
+  - languages_detected
+  - upstream
+  - domains_checked
+  - findings
+  - recommendations
+  - overall_status
+  - generated_at
+properties:
+  profile:
+    type: string
+    const: project-codeguard-security
+  repository:
+    type: string
+  revision:
+    type: string
+  languages_detected:
+    type: array
+    items:
+      type: string
+  upstream:
+    type: object
+    required: [version, source]
+    properties:
+      version:
+        type: string
+      source:
+        type: string
+      release_date:
+        type: [string, "null"]
+      release_page:
+        type: string
+      sync_date:
+        type: [string, "null"]
+  domains_checked:
+    type: array
+    items:
+      type: string
+  files_scanned:
+    type: integer
+    minimum: 0
+  findings:
+    type: array
+    items:
+      type: object
+      required: [id, domain, severity, title, summary, file]
+      properties:
+        id:
+          type: string
+        domain:
+          type: string
+        severity:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        file:
+          type: string
+        evidence:
+          type: string
+  recommendations:
+    type: array
+    items:
+      type: object
+      required: [priority, action]
+      properties:
+        priority:
+          type: string
+        action:
+          type: string
+        owner_hint:
+          type: string
+  overall_status:
+    type: string
+  generated_at:
+    type: string

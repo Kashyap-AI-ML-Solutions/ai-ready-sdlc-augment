@@ -1,0 +1,206 @@
+{
+  "version": "v1.3.1",
+  "source": "https://github.com/cosai-oasis/project-codeguard",
+  "release_page": "https://github.com/cosai-oasis/project-codeguard/releases/tag/v1.3.1",
+  "release_date": "2026-03-11",
+  "sync_date": "2026-04-17",
+  "bundle_built_at": "2026-04-17",
+  "summary": {
+    "rule_count": 23,
+    "always_apply_rule_count": 3,
+    "domains": [
+      "application-and-api-security",
+      "cryptography-and-tls",
+      "data-and-secret-protection",
+      "general-security",
+      "memory-safety",
+      "supply-chain-and-infrastructure"
+    ]
+  },
+  "rules": [
+    {
+      "rule_id": "codeguard-0-additional-cryptography",
+      "title": "Additional Cryptography & TLS",
+      "description": "Additional Cryptography guidance",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-additional-cryptography.md",
+      "domain": "cryptography-and-tls"
+    },
+    {
+      "rule_id": "codeguard-0-api-web-services",
+      "title": "API & Web Services Security",
+      "description": "API & Web services security (REST/GraphQL/SOAP), schema validation, authn/z, SSRF",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-api-web-services.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-authentication-mfa",
+      "title": "Authentication & MFA",
+      "description": "Authentication and MFA best practices (passwords, MFA, OAuth/OIDC, SAML, recovery, tokens)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-authentication-mfa.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-authorization-access-control",
+      "title": "Authorization & Access Control",
+      "description": "Authorization and access control (RBAC/ABAC/ReBAC, IDOR, mass assignment, transaction auth)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-authorization-access-control.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-client-side-web-security",
+      "title": "Client\u2011side Web Security",
+      "description": "Client-side web security (XSS/DOM XSS, CSP, CSRF, clickjacking, XS-Leaks, third-party JS)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-client-side-web-security.md",
+      "domain": "general-security"
+    },
+    {
+      "rule_id": "codeguard-0-cloud-orchestration-kubernetes",
+      "title": "Cloud & Orchestration (Kubernetes)",
+      "description": "Kubernetes hardening (RBAC, admission policies, network policies, secrets, supply chain)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-cloud-orchestration-kubernetes.md",
+      "domain": "supply-chain-and-infrastructure"
+    },
+    {
+      "rule_id": "codeguard-0-data-storage",
+      "title": "Database Security Guidelines",
+      "description": "Data & storage security (DB isolation, TLS, least privilege, RLS/CLS, backups, auditing)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-data-storage.md",
+      "domain": "data-and-secret-protection"
+    },
+    {
+      "rule_id": "codeguard-0-devops-ci-cd-containers",
+      "title": "DevOps, CI/CD, and Containers",
+      "description": "DevOps, CI/CD, and containers (pipeline hardening, artifacts, Docker/K8s images, virtual patching, toolchain)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-devops-ci-cd-containers.md",
+      "domain": "supply-chain-and-infrastructure"
+    },
+    {
+      "rule_id": "codeguard-0-file-handling-and-uploads",
+      "title": "File Upload Security Guidelines",
+      "description": "Secure file handling & uploads (validation, storage isolation, scanning, safe delivery)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-file-handling-and-uploads.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-framework-and-languages",
+      "title": "Framework & Language Guides",
+      "description": "Framework & language security guides (Django/DRF, Laravel/Symfony/Rails, .NET, Java/JAAS, Node.js, PHP config)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-framework-and-languages.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-iac-security",
+      "title": "Infrastructure as Code (IaC) Security",
+      "description": "Infrastructure as Code Security",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-iac-security.md",
+      "domain": "supply-chain-and-infrastructure"
+    },
+    {
+      "rule_id": "codeguard-0-input-validation-injection",
+      "title": "Input Validation & Injection Defense",
+      "description": "Input validation and injection defense (SQL/SOQL/LDAP/OS), parameterization, prototype pollution",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-input-validation-injection.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-logging",
+      "title": "Logging & Monitoring",
+      "description": "Logging & monitoring (structured telemetry, redaction, integrity, detection & alerting)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-logging.md",
+      "domain": "data-and-secret-protection"
+    },
+    {
+      "rule_id": "codeguard-0-mcp-security",
+      "title": "MCP (Model Context Protocol) Security Guidelines",
+      "description": "MCP (Model Context Protocol) Security based on CoSAI MCP Security guidelines",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-mcp-security.md",
+      "domain": "general-security"
+    },
+    {
+      "rule_id": "codeguard-0-mobile-apps",
+      "title": "Mobile Application Security Guidelines",
+      "description": "'Mobile app security (iOS/Android): storage, transport, code integrity, biometrics, permissions'",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-mobile-apps.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-privacy-data-protection",
+      "title": "Privacy & data protection (minimization, classification, encryption, rights, transparency)",
+      "description": "Privacy & data protection (minimization, classification, encryption, rights, transparency)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-privacy-data-protection.md",
+      "domain": "data-and-secret-protection"
+    },
+    {
+      "rule_id": "codeguard-0-safe-c-functions",
+      "title": "Prioritize Safe Memory and String Functions in C/C++",
+      "description": "Safe C Functions and Memory and String Safety Guidelines",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-safe-c-functions.md",
+      "domain": "memory-safety"
+    },
+    {
+      "rule_id": "codeguard-0-session-management-and-cookies",
+      "title": "Session Management & Cookies",
+      "description": "Session management and secure cookies (rotation, fixation, timeouts, theft detection)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-session-management-and-cookies.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-0-supply-chain-security",
+      "title": "Dependency & Supply Chain Security",
+      "description": "Dependency & supply chain security (pinning, SBOM, provenance, integrity, private registries)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-supply-chain-security.md",
+      "domain": "supply-chain-and-infrastructure"
+    },
+    {
+      "rule_id": "codeguard-0-xml-and-serialization",
+      "title": "XML & Serialization Hardening",
+      "description": "XML security and safe deserialization (DTD/XXE hardening, schema validation, no unsafe native deserialization)",
+      "always_apply": false,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-0-xml-and-serialization.md",
+      "domain": "application-and-api-security"
+    },
+    {
+      "rule_id": "codeguard-1-crypto-algorithms",
+      "title": "Cryptographic Security Guidelines & Post-Quantum Readiness",
+      "description": "Cryptographic Security Guidelines & Post-Quantum Readiness",
+      "always_apply": true,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-1-crypto-algorithms.md",
+      "domain": "cryptography-and-tls"
+    },
+    {
+      "rule_id": "codeguard-1-digital-certificates",
+      "title": "1. How to Identify Certificate Data",
+      "description": "Certificate Best Practices",
+      "always_apply": true,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-1-digital-certificates.md",
+      "domain": "cryptography-and-tls"
+    },
+    {
+      "rule_id": "codeguard-1-hardcoded-credentials",
+      "title": "No Hardcoded Credentials",
+      "description": "No Hardcoded Credentials",
+      "always_apply": true,
+      "source_path": "/Users/kkambhat/kashyap_projects/global_AI\u2011Ready_SDLC Standard/AI_SDLC_Standard/third_party/project-codeguard/v1.3.1/upstream/skills/software-security/rules/codeguard-1-hardcoded-credentials.md",
+      "domain": "data-and-secret-protection"
+    }
+  ]
+}

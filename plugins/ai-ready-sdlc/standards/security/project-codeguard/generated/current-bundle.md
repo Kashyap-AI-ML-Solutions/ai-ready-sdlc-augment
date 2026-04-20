@@ -1,0 +1,80 @@
+# Project CodeGuard Bundle Summary
+
+- Version: v1.3.1
+- Release date: 2026-03-11
+- Bundle built at: 2026-04-17
+- Rule count: 23
+- Always-apply rules: 3
+- Domains: application-and-api-security, cryptography-and-tls, data-and-secret-protection, general-security, memory-safety, supply-chain-and-infrastructure
+
+## Rules
+
+- `codeguard-0-additional-cryptography`: Additional Cryptography & TLS
+  - domain: cryptography-and-tls
+  - always apply: no
+- `codeguard-0-api-web-services`: API & Web Services Security
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-authentication-mfa`: Authentication & MFA
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-authorization-access-control`: Authorization & Access Control
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-client-side-web-security`: Client‑side Web Security
+  - domain: general-security
+  - always apply: no
+- `codeguard-0-cloud-orchestration-kubernetes`: Cloud & Orchestration (Kubernetes)
+  - domain: supply-chain-and-infrastructure
+  - always apply: no
+- `codeguard-0-data-storage`: Database Security Guidelines
+  - domain: data-and-secret-protection
+  - always apply: no
+- `codeguard-0-devops-ci-cd-containers`: DevOps, CI/CD, and Containers
+  - domain: supply-chain-and-infrastructure
+  - always apply: no
+- `codeguard-0-file-handling-and-uploads`: File Upload Security Guidelines
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-framework-and-languages`: Framework & Language Guides
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-iac-security`: Infrastructure as Code (IaC) Security
+  - domain: supply-chain-and-infrastructure
+  - always apply: no
+- `codeguard-0-input-validation-injection`: Input Validation & Injection Defense
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-logging`: Logging & Monitoring
+  - domain: data-and-secret-protection
+  - always apply: no
+- `codeguard-0-mcp-security`: MCP (Model Context Protocol) Security Guidelines
+  - domain: general-security
+  - always apply: no
+- `codeguard-0-mobile-apps`: Mobile Application Security Guidelines
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-privacy-data-protection`: Privacy & data protection (minimization, classification, encryption, rights, transparency)
+  - domain: data-and-secret-protection
+  - always apply: no
+- `codeguard-0-safe-c-functions`: Prioritize Safe Memory and String Functions in C/C++
+  - domain: memory-safety
+  - always apply: no
+- `codeguard-0-session-management-and-cookies`: Session Management & Cookies
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-0-supply-chain-security`: Dependency & Supply Chain Security
+  - domain: supply-chain-and-infrastructure
+  - always apply: no
+- `codeguard-0-xml-and-serialization`: XML & Serialization Hardening
+  - domain: application-and-api-security
+  - always apply: no
+- `codeguard-1-crypto-algorithms`: Cryptographic Security Guidelines & Post-Quantum Readiness
+  - domain: cryptography-and-tls
+  - always apply: yes
+- `codeguard-1-digital-certificates`: 1. How to Identify Certificate Data
+  - domain: cryptography-and-tls
+  - always apply: yes
+- `codeguard-1-hardcoded-credentials`: No Hardcoded Credentials
+  - domain: data-and-secret-protection
+  - always apply: yes

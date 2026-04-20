@@ -1,0 +1,101 @@
+{
+  "languages": [
+    {
+      "language": "python",
+      "detect": {
+        "extensions": [".py"],
+        "files": ["pyproject.toml", "requirements.txt", "setup.py"]
+      },
+      "required_tools": [
+        {"tool": "pylint", "category": "code_quality", "command": "pylint <targets>", "binary": "pylint", "install": {"developer": "python3 -m pip install pylint", "ci": "python3 -m pip install pylint", "location": "Install into the active Python environment and ensure the pylint binary is available on PATH."}},
+        {"tool": "bandit", "category": "security", "command": "bandit -r <targets>", "binary": "bandit", "install": {"developer": "python3 -m pip install bandit", "ci": "python3 -m pip install bandit", "location": "Install into the active Python environment and ensure the bandit binary is available on PATH."}},
+        {"tool": "radon", "category": "complexity", "command": "radon cc -s <targets>", "binary": "radon", "install": {"developer": "python3 -m pip install radon", "ci": "python3 -m pip install radon", "location": "Install into the active Python environment and ensure the radon binary is available on PATH."}}
+      ],
+      "optional_tools": [
+        {"tool": "mypy", "category": "quality", "command": "mypy <targets>", "binary": "mypy", "install": {"developer": "python3 -m pip install mypy", "ci": "python3 -m pip install mypy", "location": "Install into the active Python environment and ensure the mypy binary is available on PATH."}},
+        {"tool": "ruff", "category": "style", "command": "ruff check <targets>", "binary": "ruff", "install": {"developer": "python3 -m pip install ruff", "ci": "python3 -m pip install ruff", "location": "Install into the active Python environment and ensure the ruff binary is available on PATH."}}
+      ]
+    },
+    {
+      "language": "go",
+      "detect": {
+        "extensions": [".go"],
+        "files": ["go.mod", "go.sum"]
+      },
+      "required_tools": [
+        {"tool": "golangci-lint", "category": "code_quality", "command": "golangci-lint run ./...", "binary": "golangci-lint", "install": {"developer": "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest", "ci": "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest", "location": "Install into the Go toolchain bin directory and ensure golangci-lint is available on PATH."}},
+        {"tool": "gosec", "category": "security", "command": "gosec ./...", "binary": "gosec", "install": {"developer": "go install github.com/securego/gosec/v2/cmd/gosec@latest", "ci": "go install github.com/securego/gosec/v2/cmd/gosec@latest", "location": "Install into the Go toolchain bin directory and ensure gosec is available on PATH."}},
+        {"tool": "gocyclo", "category": "complexity", "command": "gocyclo -over 15 .", "binary": "gocyclo", "install": {"developer": "go install github.com/fzipp/gocyclo/cmd/gocyclo@latest", "ci": "go install github.com/fzipp/gocyclo/cmd/gocyclo@latest", "location": "Install into the Go toolchain bin directory and ensure gocyclo is available on PATH."}},
+        {"tool": "govulncheck", "category": "security", "command": "govulncheck ./...", "binary": "govulncheck", "install": {"developer": "go install golang.org/x/vuln/cmd/govulncheck@latest", "ci": "go install golang.org/x/vuln/cmd/govulncheck@latest", "location": "Install into the Go toolchain bin directory and ensure govulncheck is available on PATH."}}
+      ],
+      "optional_tools": [
+        {"tool": "go vet", "category": "code_quality", "command": "go vet ./...", "binary": "go", "install": {"developer": "Install the Go toolchain", "ci": "Install the Go toolchain", "location": "The go binary should be available on PATH."}},
+        {"tool": "gofmt", "category": "style", "command": "gofmt -l .", "binary": "gofmt", "install": {"developer": "Install the Go toolchain", "ci": "Install the Go toolchain", "location": "The gofmt binary should be available on PATH as part of the Go toolchain."}}
+      ]
+    },
+    {
+      "language": "ansible",
+      "detect": {
+        "extensions": [".yml", ".yaml"],
+        "files": ["ansible.cfg"],
+        "paths": ["playbooks", "roles", "collections"]
+      },
+      "required_tools": [
+        {"tool": "ansible-lint", "category": "code_quality", "command": "ansible-lint .", "binary": "ansible-lint", "install": {"developer": "python3 -m pip install ansible-lint", "ci": "python3 -m pip install ansible-lint", "location": "Install into the active Python environment and ensure ansible-lint is available on PATH."}},
+        {"tool": "yamllint", "category": "style", "command": "yamllint .", "binary": "yamllint", "install": {"developer": "python3 -m pip install yamllint", "ci": "python3 -m pip install yamllint", "location": "Install into the active Python environment and ensure yamllint is available on PATH."}},
+        {"tool": "checkov", "category": "security", "command": "checkov -d .", "binary": "checkov", "install": {"developer": "python3 -m pip install checkov", "ci": "python3 -m pip install checkov", "location": "Install into the active Python environment and ensure checkov is available on PATH."}}
+      ],
+      "optional_tools": [
+        {"tool": "ansible-playbook", "category": "syntax", "command": "ansible-playbook --syntax-check <playbook>", "binary": "ansible-playbook", "install": {"developer": "python3 -m pip install ansible", "ci": "python3 -m pip install ansible", "location": "Install into the active Python environment and ensure ansible-playbook is available on PATH."}}
+      ]
+    },
+    {
+      "language": "java",
+      "detect": {
+        "extensions": [".java"],
+        "files": ["pom.xml", "build.gradle", "build.gradle.kts"]
+      },
+      "required_tools": [
+        {"tool": "checkstyle", "category": "style", "command": "./gradlew checkstyleMain || mvn checkstyle:check", "binary": "mvn", "install": {"developer": "Install Maven or use the project Gradle wrapper", "ci": "Install Maven or use the project Gradle wrapper", "location": "Either ./gradlew must exist in the repo or mvn must be available on PATH."}},
+        {"tool": "spotbugs", "category": "code_quality", "command": "./gradlew spotbugsMain || mvn spotbugs:check", "binary": "mvn", "install": {"developer": "Install Maven or use the project Gradle wrapper", "ci": "Install Maven or use the project Gradle wrapper", "location": "Either ./gradlew must exist in the repo or mvn must be available on PATH."}},
+        {"tool": "pmd", "category": "maintainability", "command": "./gradlew pmdMain || mvn pmd:check", "binary": "mvn", "install": {"developer": "Install Maven or use the project Gradle wrapper", "ci": "Install Maven or use the project Gradle wrapper", "location": "Either ./gradlew must exist in the repo or mvn must be available on PATH."}}
+      ],
+      "optional_tools": [
+        {"tool": "dependency-check", "category": "security", "command": "./gradlew dependencyCheckAnalyze || mvn org.owasp:dependency-check-maven:check", "binary": "mvn", "install": {"developer": "Install Maven or use the project Gradle wrapper", "ci": "Install Maven or use the project Gradle wrapper", "location": "Either ./gradlew must exist in the repo or mvn must be available on PATH."}},
+        {"tool": "semgrep", "category": "security", "command": "semgrep --config auto .", "binary": "semgrep", "install": {"developer": "python3 -m pip install semgrep", "ci": "python3 -m pip install semgrep", "location": "Install semgrep and ensure it is available on PATH."}}
+      ]
+    },
+    {
+      "language": "javascript-typescript",
+      "detect": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "files": ["package.json", "tsconfig.json"]
+      },
+      "required_tools": [
+        {"tool": "eslint", "category": "code_quality", "command": "npx --no-install eslint .", "binary": "eslint", "install": {"developer": "npm install --save-dev eslint", "ci": "npm ci", "location": "Install in the project node_modules and ensure eslint is reachable via npx or node_modules/.bin."}},
+        {"tool": "tsc", "category": "code_quality", "command": "npx --no-install tsc --noEmit", "binary": "tsc", "install": {"developer": "npm install --save-dev typescript", "ci": "npm ci", "location": "Install in the project node_modules and ensure tsc is reachable via npx or node_modules/.bin."}},
+        {"tool": "npm-audit", "category": "security", "command": "npm audit --json", "binary": "npm", "install": {"developer": "Install Node.js and npm", "ci": "Install Node.js and npm", "location": "The npm binary must be available on PATH."}}
+      ],
+      "optional_tools": [
+        {"tool": "prettier", "category": "style", "command": "npx --no-install prettier --check .", "binary": "prettier", "install": {"developer": "npm install --save-dev prettier", "ci": "npm ci", "location": "Install in the project node_modules and ensure prettier is reachable via npx or node_modules/.bin."}},
+        {"tool": "semgrep", "category": "security", "command": "semgrep --config auto .", "binary": "semgrep", "install": {"developer": "python3 -m pip install semgrep", "ci": "python3 -m pip install semgrep", "location": "Install semgrep and ensure it is available on PATH."}}
+      ]
+    },
+    {
+      "language": "cpp",
+      "detect": {
+        "extensions": [".c", ".cc", ".cpp", ".cxx", ".h", ".hpp", ".hh"],
+        "files": ["CMakeLists.txt", "compile_commands.json", "Makefile"]
+      },
+      "required_tools": [
+        {"tool": "clang-tidy", "category": "code_quality", "command": "clang-tidy <files>", "binary": "clang-tidy", "install": {"developer": "Install LLVM/Clang toolchain", "ci": "Install LLVM/Clang toolchain", "location": "Ensure clang-tidy is available on PATH."}},
+        {"tool": "cppcheck", "category": "maintainability", "command": "cppcheck --enable=all .", "binary": "cppcheck", "install": {"developer": "Install cppcheck", "ci": "Install cppcheck", "location": "Ensure cppcheck is available on PATH."}},
+        {"tool": "clang-format", "category": "style", "command": "clang-format --dry-run --Werror <files>", "binary": "clang-format", "install": {"developer": "Install LLVM/Clang toolchain", "ci": "Install LLVM/Clang toolchain", "location": "Ensure clang-format is available on PATH."}}
+      ],
+      "optional_tools": [
+        {"tool": "include-what-you-use", "category": "maintainability", "command": "include-what-you-use <files>", "binary": "include-what-you-use", "install": {"developer": "Install include-what-you-use", "ci": "Install include-what-you-use", "location": "Ensure include-what-you-use is available on PATH."}},
+        {"tool": "semgrep", "category": "security", "command": "semgrep --config auto .", "binary": "semgrep", "install": {"developer": "python3 -m pip install semgrep", "ci": "python3 -m pip install semgrep", "location": "Install semgrep and ensure it is available on PATH."}}
+      ]
+    }
+  ]
+}

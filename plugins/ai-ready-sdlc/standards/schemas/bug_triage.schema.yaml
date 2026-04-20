@@ -1,0 +1,30 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Bug Triage Record
+type: object
+required:
+  - issue_id
+  - component
+  - severity
+  - customer_impact
+  - probable_cause
+  - suggested_owner
+properties:
+  issue_id:
+    type: string
+  component:
+    type: string
+  severity:
+    type: string
+    enum: [low, medium, high, critical]
+  customer_impact:
+    type: string
+  probable_cause:
+    type: string
+  suggested_owner:
+    type: string
+  ai_confidence:
+    type: number
+    minimum: 0
+    maximum: 1
+  rationale:
+    type: string

@@ -1,0 +1,21 @@
+language: java
+detect:
+  extensions: [".java"]
+  files: ["pom.xml", "build.gradle", "build.gradle.kts"]
+required_tools:
+  - tool: checkstyle
+    category: style
+    command: ./gradlew checkstyleMain || mvn checkstyle:check
+  - tool: spotbugs
+    category: code_quality
+    command: ./gradlew spotbugsMain || mvn spotbugs:check
+  - tool: pmd
+    category: maintainability
+    command: ./gradlew pmdMain || mvn pmd:check
+optional_tools:
+  - tool: dependency-check
+    category: security
+    command: ./gradlew dependencyCheckAnalyze || mvn org.owasp:dependency-check-maven:check
+  - tool: semgrep
+    category: security
+    command: semgrep --config auto .

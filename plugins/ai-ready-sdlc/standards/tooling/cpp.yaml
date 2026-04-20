@@ -1,0 +1,21 @@
+language: cpp
+detect:
+  extensions: [".c", ".cc", ".cpp", ".cxx", ".h", ".hpp", ".hh"]
+  files: ["CMakeLists.txt", "compile_commands.json", "Makefile"]
+required_tools:
+  - tool: clang-tidy
+    category: code_quality
+    command: clang-tidy <files>
+  - tool: cppcheck
+    category: maintainability
+    command: cppcheck --enable=all .
+  - tool: clang-format
+    category: style
+    command: clang-format --dry-run --Werror <files>
+optional_tools:
+  - tool: include-what-you-use
+    category: maintainability
+    command: include-what-you-use <files>
+  - tool: semgrep
+    category: security
+    command: semgrep --config auto .

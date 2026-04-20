@@ -1,0 +1,24 @@
+service: example-service
+owners:
+  - team-example
+models:
+  - provider: openai
+    name: gpt-5
+    purpose: code review summary generation
+tools:
+  - name: issue-tracker
+    access: read-write
+    notes: used for bug triage updates
+datasets:
+  - name: regression-evals
+    purpose: compare model behavior across changes
+    location: s3://example/evals
+guardrails:
+  policies:
+    - no-auto-merge
+    - pii-redaction
+  escalation: human approval required for production-impacting changes
+observability:
+  tracing: otel://collector.example.internal
+  metrics: https://grafana.example.internal/d/ai-service
+  dashboards: https://grafana.example.internal/d/ai-overview

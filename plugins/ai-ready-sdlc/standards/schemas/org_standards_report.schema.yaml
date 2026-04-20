@@ -1,0 +1,50 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Organization Standards Report
+type: object
+required:
+  - repository
+  - revision
+  - profile
+  - overall_status
+  - checked_at
+  - areas
+  - area_statuses
+  - findings
+  - recommendations
+properties:
+  repository:
+    type: string
+  revision:
+    type: string
+  profile:
+    type: string
+  overall_status:
+    type: string
+  checked_at:
+    type: string
+  area_statuses:
+    type: object
+  areas:
+    type: object
+    required:
+      - code_quality
+      - ai_readiness
+      - bug_triage
+      - requirements_to_tests
+    properties:
+      code_quality:
+        type: object
+      ai_readiness:
+        type: object
+      bug_triage:
+        type: object
+      requirements_to_tests:
+        type: object
+  findings:
+    type: array
+    items:
+      type: object
+  recommendations:
+    type: array
+    items:
+      type: object

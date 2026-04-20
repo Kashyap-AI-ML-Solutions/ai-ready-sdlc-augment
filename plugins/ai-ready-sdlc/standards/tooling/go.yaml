@@ -1,0 +1,24 @@
+language: go
+detect:
+  extensions: [".go"]
+  files: ["go.mod", "go.sum"]
+required_tools:
+  - tool: golangci-lint
+    category: code_quality
+    command: golangci-lint run ./...
+  - tool: gosec
+    category: security
+    command: gosec ./...
+  - tool: gocyclo
+    category: complexity
+    command: gocyclo -over 15 .
+  - tool: govulncheck
+    category: security
+    command: govulncheck ./...
+optional_tools:
+  - tool: go vet
+    category: code_quality
+    command: go vet ./...
+  - tool: gofmt
+    category: style
+    command: gofmt -l .

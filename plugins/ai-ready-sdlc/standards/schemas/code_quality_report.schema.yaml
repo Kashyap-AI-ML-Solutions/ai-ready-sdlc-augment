@@ -1,0 +1,90 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Code Quality Report
+type: object
+required:
+  - repository
+  - languages_detected
+  - tools_run
+  - dimension_scores
+  - findings
+  - recommendations
+  - checked_at
+properties:
+  repository:
+    type: string
+  revision:
+    type: string
+  languages_detected:
+    type: array
+    minItems: 1
+    items:
+      type: string
+  tools_run:
+    type: array
+    items:
+      type: object
+      required: [language, tool, category, status]
+      properties:
+        language:
+          type: string
+        tool:
+          type: string
+        category:
+          type: string
+        status:
+          type: string
+        command:
+          type: string
+        binary:
+          type: string
+        install:
+          type: object
+  dimension_scores:
+    type: object
+    properties:
+      code_quality:
+        type: string
+      complexity:
+        type: string
+      security:
+        type: string
+      style:
+        type: string
+      maintainability:
+        type: string
+  findings:
+    type: array
+    items:
+      type: object
+      required: [area, severity, summary]
+      properties:
+        area:
+          type: string
+        severity:
+          type: string
+        summary:
+          type: string
+        evidence:
+          type: string
+        tool:
+          type: string
+  recommendations:
+    type: array
+    items:
+      type: object
+      required: [priority, action]
+      properties:
+        priority:
+          type: string
+        action:
+          type: string
+        owner_hint:
+          type: string
+  checked_at:
+    type: string
+  generated_at:
+    type: string
+  coverage_policy:
+    type: object
+  coverage_observed:
+    type: object
