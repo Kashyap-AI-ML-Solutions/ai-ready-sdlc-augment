@@ -15,7 +15,7 @@ To recommend the marketplace for a specific repository, add this to `.augment/se
 
 ```json
 {
-  "recommendedMarketplaces": ["<owner>/<repo>"],
+  "recommendedMarketplaces": ["Kashyap-AI-ML-Solutions/ai-ready-sdlc-augment"],
   "enabledPlugins": {
     "ai-ready-sdlc@ai-ready-sdlc-augment": true
   }
