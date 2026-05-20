@@ -198,7 +198,7 @@ If no GitHub connector or CLI is available, the workflow should stop and explain
 
 Project CodeGuard remediation discovered during org review should not bypass planning. Use `fix-project-codeguard-findings` only after it routes through `steer-adlc-harness --task-type remediation` and writes the canonical `.adlc/plans/<run>/` artifacts in the target repo.
 
-Generic org standards remediation should use `fix-org-standards-findings` in plan-only mode first. The target repo plugin reads `reports/org-standards.json`, writes selected and out-of-scope recommendations into `.adlc/plans/<run>/`, and only then can a human approve implementation of that scoped slice.
+Generic org standards remediation should use `fix-org-standards-findings` for active-plan slice selection first. The target repo plugin reads `reports/org-standards.json`, continues `.adlc/lifecycle.json.active_plan`, writes selected and out-of-scope recommendations into that active plan, and only then can a human approve implementation of that scoped slice. After approved implementation, rerun `run-org-standards` before publishing the snapshot.
 
 ## Source Alignment
 

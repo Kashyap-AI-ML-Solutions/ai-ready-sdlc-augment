@@ -157,11 +157,13 @@ python3 scripts/steer-adlc-harness.py --repo-path . --task-type remediation --ti
 
 The resulting `.adlc/plans/<run>/` directory must identify the findings, tests, evals, security checks, standards checks, bounded work items, and proof requirements. Implementation starts only after that plan exists.
 
-For generic org standards remediation, `fix-org-standards-findings` reads `reports/org-standards.json`, selects a bounded recommendation slice, writes selected and out-of-scope recommendations into `.adlc/plans/<run>/`, and stops in plan-only mode unless the user explicitly approves implementation:
+For generic org standards remediation, `fix-org-standards-findings` reads `reports/org-standards.json`, selects a bounded recommendation slice, continues `.adlc/lifecycle.json.active_plan` by default, writes selected and out-of-scope recommendations into the active plan, and stops until the user explicitly approves implementation:
 
 ```bash
 python3 scripts/fix-org-standards-findings.py --repo-path . --source-report reports/org-standards.json --priority low --max-items 3
 ```
+
+Use `--new-plan` only when the user explicitly asks for a separate remediation plan. After approved implementation, rerun `run-org-standards` before publishing the snapshot.
 
 ## Plan Artifact
 

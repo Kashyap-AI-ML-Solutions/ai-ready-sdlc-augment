@@ -1,10 +1,10 @@
 ---
-description: Create a scoped ADLC remediation plan from org standards findings before implementation.
+description: Continue the active ADLC plan with a scoped org standards remediation slice before implementation.
 ---
 
 # Fix Org Standards Findings
 
-Create a scoped, plan-only ADLC remediation plan from `reports/org-standards.json`.
+Continue the active ADLC plan with a scoped org standards remediation slice from `reports/org-standards.json`.
 
 This command must not edit code by default. It exists to avoid unbounded "fix everything" runs.
 
@@ -18,8 +18,9 @@ Preferred workflow:
 
 - ensure `reports/org-standards.json` exists by running `run-org-standards`,
 - ensure `.adlc/` exists with `create-adlc-harness` if needed,
+- read `.adlc/lifecycle.json.active_plan` and continue that plan by default,
 - select the requested slice of recommendations,
-- create a canonical remediation plan under `.adlc/plans/<run>/`,
+- write selected and out-of-scope recommendations into the active plan,
 - include selected recommendations, out-of-scope recommendations, tests, evals, standards checks, work items, and proof requirements,
 - wait for human approval before implementation.
 
@@ -30,3 +31,7 @@ python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-r
 ```
 
 For a different scoped slice, change `--priority`, `--area`, or `--max-items`. Do not implement selected work items unless the user explicitly approves.
+
+Use `--new-plan` only if the user explicitly asks for a separate remediation plan.
+
+After the user approves the selected slice, implement only the approved selected work items, rerun `run-org-standards`, and do not publish until the rerun is reviewed.

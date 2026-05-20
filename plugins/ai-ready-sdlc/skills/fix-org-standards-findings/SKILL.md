@@ -1,11 +1,11 @@
 ---
 name: fix-org-standards-findings
-description: Create a scoped plan-first remediation slice from org standards findings.
+description: Continue the active ADLC plan with a scoped org standards remediation slice.
 ---
 
-Use this skill when `reports/org-standards.json` exists and the team wants a bounded remediation plan for organization standards recommendations.
+Use this skill when `reports/org-standards.json` exists and the team wants a bounded remediation slice for organization standards recommendations inside the active ADLC plan.
 
-This is plan-first. Do not edit code by default.
+This is slice-selection first. Do not edit code by default.
 
 Execution gate:
 
@@ -28,4 +28,6 @@ The generated `.adlc/plans/<run>/` artifacts must show:
 - standards checks,
 - proof requirements.
 
-Implementation starts only after the user approves the plan and scope.
+By default, continue `.adlc/lifecycle.json.active_plan`; use `--new-plan` only when the user explicitly asks for a separate remediation plan.
+
+Implementation starts only after the user approves the selected slice. After implementation, rerun `run-org-standards` and do not publish until the rerun is reviewed.
