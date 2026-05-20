@@ -24,8 +24,13 @@ def iter_report_paths(collection_repo: Path, include_all_runs: bool) -> list[Pat
     for path in collection_repo.rglob("org-standards.json"):
         if should_skip(path):
             continue
-        normalized = path.as_posix()
-        if include_all_runs or "/latest/" in normalized or normalized.endswith("/reports/org-standards.json"):
+        rel_parts = path.relative_to(collection_repo).parts
+        if include_all_runs:
+            paths.append(path)
+        elif "latest" in rel_parts:
+            paths.append(path)
+        elif "runs" not in rel_parts:
+            # Backward-compatible support for older flat collection layouts.
             paths.append(path)
     return sorted(paths)
 
