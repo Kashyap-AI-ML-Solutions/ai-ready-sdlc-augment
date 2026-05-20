@@ -19,6 +19,8 @@ The policy authority for this package is:
 ## Baseline Behavior
 
 - Prefer `Claude Opus 4.6` as the Auggie default or workspace model for this plugin.
+- For user/global enablement, `~/.augment/settings.json` should recommend `Kashyap-AI-ML-Solutions/ai-ready-sdlc-augment` and set `enabledPlugins.ai-ready-sdlc@ai-ready-sdlc-augment` to `true`.
+- In Auggie 0.27.2, invoke commands with the autocomplete namespace `/ai-ready-sdlc--ai-ready-sdlc-augment:<command>`.
 - Prefer compliant repository changes.
 - Never bypass human approval.
 - Encourage manifests, test plans, observability, and structured review artifacts.
