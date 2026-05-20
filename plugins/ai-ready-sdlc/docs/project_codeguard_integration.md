@@ -284,6 +284,8 @@ A new upstream Project CodeGuard version should not become our default until:
 - `/ai-ready-sdlc:fix-project-codeguard-findings`
 - `/ai-ready-sdlc:explain-project-codeguard-findings`
 
+The fix command is gated by the ADLC conductor. It should call `scripts/steer-adlc-harness.py --task-type remediation --source-report reports/project-codeguard-security.json` and create `.adlc/plans/<run>/` before any code edits.
+
 ### New agents
 
 - `project-codeguard-security-reviewer`

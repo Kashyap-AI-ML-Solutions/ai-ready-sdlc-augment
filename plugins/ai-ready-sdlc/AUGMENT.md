@@ -23,7 +23,17 @@ The policy authority for this package is:
 - Never bypass human approval.
 - Encourage manifests, test plans, observability, and structured review artifacts.
 - Use the organization workflow surface for repeatable standards checks:
+  - `create-adlc-harness`
+  - `steer-adlc-harness`
+  - `adlc-harness`
+  - `adlc-feature-harness`
+  - `adlc-bugfix-harness`
+  - `adlc-remediation-harness`
+  - `adlc-org-status-harness`
+  - `publish-adlc-snapshot`
   - `run-org-standards`
+  - `run-org-repo-status`
+  - `aggregate-org-metrics`
   - `review-code-quality`
   - `review-project-codeguard-security`
   - `fix-project-codeguard-findings`

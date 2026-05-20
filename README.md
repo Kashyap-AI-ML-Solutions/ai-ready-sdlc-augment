@@ -7,7 +7,7 @@ This directory is a publishable Augment / Auggie marketplace for the `ai-ready-s
 After publishing this marketplace repository to GitHub or GitHub Enterprise, install it with:
 
 ```sh
-auggie plugin marketplace add <owner>/<repo>
+auggie plugin marketplace add Kashyap-AI-ML-Solutions/ai-ready-sdlc-augment
 auggie plugin install ai-ready-sdlc@ai-ready-sdlc-augment --project
 ```
 
@@ -24,7 +24,16 @@ To recommend the marketplace for a specific repository, add this to `.augment/se
 
 ## Included Workflow Surface
 
+- `/ai-ready-sdlc:create-adlc-harness`
+- `/ai-ready-sdlc:steer-adlc-harness`
+- `/ai-ready-sdlc:adlc-harness`
+- `/ai-ready-sdlc:adlc-feature-harness`
+- `/ai-ready-sdlc:adlc-bugfix-harness`
+- `/ai-ready-sdlc:adlc-remediation-harness`
+- `/ai-ready-sdlc:adlc-org-status-harness`
 - `/ai-ready-sdlc:run-org-standards`
+- `/ai-ready-sdlc:run-org-repo-status`
+- `/ai-ready-sdlc:aggregate-org-metrics`
 - `/ai-ready-sdlc:review-code-quality`
 - `/ai-ready-sdlc:review-project-codeguard-security`
 - `/ai-ready-sdlc:fix-project-codeguard-findings`

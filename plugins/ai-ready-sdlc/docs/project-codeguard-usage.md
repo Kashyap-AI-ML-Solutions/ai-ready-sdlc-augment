@@ -67,6 +67,14 @@ It now includes:
 
 The dedicated Project CodeGuard workflow is for a narrower, security-only follow-up.
 
+`fix-project-codeguard-findings` is a remediation workflow, so it must route through the ADLC conductor before code changes:
+
+```bash
+python3 scripts/steer-adlc-harness.py --repo-path <repo> --task-type remediation --title "Project CodeGuard remediation" --source-report reports/project-codeguard-security.json
+```
+
+The conductor creates `.adlc/plans/<run>/` with the required tests, evals, security checks, standards checks, work items, and proof expectations.
+
 ## Updating The Pinned Upstream Version
 
 Use the release-management flow from the product repo:

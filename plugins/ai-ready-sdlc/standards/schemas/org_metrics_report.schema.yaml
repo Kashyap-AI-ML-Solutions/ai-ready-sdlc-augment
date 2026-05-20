@@ -1,0 +1,51 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: ADLC Organization Metrics Report
+type: object
+required:
+  - generated_at
+  - total_repositories
+  - overall_status_counts
+  - coverage
+  - security
+  - gaps
+  - complexity
+  - maintainability
+  - repositories
+properties:
+  generated_at:
+    type: string
+  total_repositories:
+    type: integer
+  overall_status_counts:
+    type: object
+  coverage:
+    type: object
+    required:
+      - meeting_policy_count
+      - meeting_policy_percent
+      - missing_artifact_count
+      - below_policy_count
+  security:
+    type: object
+    required:
+      - high_or_critical_count
+      - high_or_critical_percent
+      - too_many_security_issues_count
+  gaps:
+    type: object
+    required:
+      - large_gap_count
+      - small_gap_count
+      - immediate_attention_count
+  complexity:
+    type: object
+  maintainability:
+    type: object
+  tool_installation_gaps:
+    type: object
+  recommendation_priority_counts:
+    type: object
+  repositories:
+    type: array
+    items:
+      type: object

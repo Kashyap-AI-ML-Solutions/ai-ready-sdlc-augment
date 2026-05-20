@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1.0",
+  "generated_by": "adlc-default-harness",
+  "generated_at": "{{generated_at}}",
+  "repository": "{{repo_name}}",
+  "distribution_model": "plugin-first",
+  "current_phase": "Discover",
+  "phases": [
+    "Discover",
+    "Scaffold",
+    "Refresh",
+    "Blueprint",
+    "Plan",
+    "Execute",
+    "Verify",
+    "Repair",
+    "Prove",
+    "Report"
+  ],
+  "active_plan": null,
+  "detected_local_harnesses": {{detected_harnesses_json}},
+  "history": [
+    {
+      "phase": "Discover",
+      "status": "initialized",
+      "at": "{{generated_at}}",
+      "summary": "ADLC shared state initialized; platform discovery remains plugin-based."
+    }
+  ]
+}

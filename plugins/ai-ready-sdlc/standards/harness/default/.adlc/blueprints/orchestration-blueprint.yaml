@@ -1,0 +1,32 @@
+task_type: orchestration
+title: ""
+requester: ""
+created_at: ""
+
+inventory:
+  source_file: inventory/repos.yaml
+  target_orgs: []
+  target_repositories: []
+
+collection_repo:
+  url: ""
+  local_path: ""
+  layout: ADLC/docs/org-status-collection-repo.md
+
+execution:
+  batch_size: 5
+  max_parallel_agents: 5
+  standards_profile: org-standards
+  publish_latest: true
+
+metrics:
+  aggregate_after_run: true
+  output_json: metrics/org-metrics.json
+  output_markdown: metrics/org-metrics.md
+
+proof:
+  required_artifacts:
+    - per-repo run snapshots
+    - latest snapshots
+    - org metrics rollup
+    - remediation plan

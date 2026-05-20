@@ -1,0 +1,57 @@
+title ADLC Harness Steerer
+
+participant Engineer
+participant "ADLC Plugin\nClaude/Codex/Auggie" as Plugin
+participant "steer-adlc-harness.py" as Conductor
+participant "Target Repo" as Repo
+participant ".adlc Harness" as Harness
+participant ".adlc Plan" as Plan
+participant "Standards Checker" as Checker
+participant "Tests and Tools" as Tools
+participant "Proof Artifacts" as Proof
+
+Engineer->Plugin: Request feature, bug fix, unit tests, or remediation
+Plugin->Conductor: Start task with task_type and optional source_report
+Conductor->Repo: Discover existing harness and repo signals
+Repo-->Conductor: Files, tests, reports, current conventions
+
+alt No harness exists
+  Conductor->Harness: Initialize shared ADLC state
+  Harness->Repo: Write .adlc files only by default
+else Harness exists
+  Conductor->Harness: Refresh shared state without overwriting user work
+end
+
+Conductor->Repo: Detect existing .claude/.codex/.augment/Superpowers harnesses
+Repo-->Conductor: Existing local harness references
+Conductor->Harness: Record detected harnesses
+note over Plugin,Repo: Repo-local platform files are optional overrides only
+
+alt fix-project-codeguard-findings
+  Conductor->Repo: Read reports/project-codeguard-security.json
+  Conductor->Harness: Set remediation task and source report
+else Feature, bugfix, unit-test, or orchestration
+  Conductor->Harness: Classify task and select blueprint
+end
+
+Conductor->Harness: Create task blueprint
+Harness->Plan: Write canonical .adlc/plans/<run>/ artifacts
+Plan->Plan: Add tests, evals, standards checks, work items
+Plugin->Tools: Run focused failing or baseline checks
+Tools-->Plugin: Failure output or baseline evidence
+Plugin->Repo: Implement one work item
+Plugin->Tools: Run validation commands
+Tools-->Plugin: Test, lint, coverage, or build result
+
+alt Validation fails
+  Plugin->Harness: Append status and failure context
+  Plugin->Repo: Repair bounded work item
+  Plugin->Tools: Re-run validation
+else Validation passes
+  Plugin->Checker: Run ADLC standards profile
+  Checker-->Plugin: Standards report
+  Plugin->Proof: Write proof of functionality
+  Plugin->Harness: Update status and handoff
+end
+
+Plugin-->Engineer: Summarize outcome, evidence, and next action

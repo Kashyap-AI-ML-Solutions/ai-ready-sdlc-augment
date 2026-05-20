@@ -31,6 +31,7 @@ properties:
       - ai_readiness
       - bug_triage
       - requirements_to_tests
+      - project_codeguard_security
     properties:
       code_quality:
         type: object
@@ -39,6 +40,8 @@ properties:
       bug_triage:
         type: object
       requirements_to_tests:
+        type: object
+      project_codeguard_security:
         type: object
   findings:
     type: array

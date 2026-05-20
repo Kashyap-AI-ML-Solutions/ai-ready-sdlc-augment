@@ -1,0 +1,34 @@
+task_type: bugfix
+title: ""
+requester: ""
+created_at: ""
+
+bug:
+  observed_behavior: ""
+  expected_behavior: ""
+  reproduction_steps:
+    - ""
+  affected_components: []
+  severity: ""
+
+diagnosis:
+  suspected_cause: ""
+  evidence:
+    - ""
+
+test_strategy:
+  reproduction_test: ""
+  regression_tests:
+    - ""
+
+implementation_plan:
+  work_items:
+    - id: B-1
+      description: ""
+      validation: ""
+
+proof:
+  required_artifacts:
+    - reproduction evidence
+    - regression test output
+    - fix verification

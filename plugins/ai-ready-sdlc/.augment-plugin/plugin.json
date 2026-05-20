@@ -1,6 +1,6 @@
 {
   "name": "ai-ready-sdlc",
-  "description": "Organization standards workflows for AI-ready engineering in Augment.",
+  "description": "Organization ADLC harness, standards, and metrics workflows for AI-ready engineering in Augment.",
   "version": "0.1.0",
   "author": {
     "name": "AI SDLC Standards Team",
@@ -10,9 +10,12 @@
   "keywords": [
     "ai",
     "sdlc",
+    "adlc",
+    "harness",
     "quality",
     "governance",
     "standards",
+    "metrics",
     "security",
     "project-codeguard",
     "augment"

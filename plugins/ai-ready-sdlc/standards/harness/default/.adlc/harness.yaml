@@ -1,0 +1,100 @@
+schema_version: 0.1.0
+generated_by: adlc-default-harness
+generated_at: "{{generated_at}}"
+repository: "{{repo_name}}"
+distribution_model: plugin-first
+plugin_surface:
+  claude: "ADLC Claude plugin commands, agents, and skills"
+  codex: "ADLC Codex plugin skills and scripts"
+  augment: "ADLC Augment marketplace commands, agents, and skills"
+
+principles:
+  - Keep policy and standards in the shared ADLC core.
+  - Keep task state, work items, and proofs in this repository.
+  - Use plugin commands and skills as the platform discovery surface.
+  - Treat repo-local platform harnesses as optional overrides or existing local conventions.
+  - Prefer small, restartable work items with explicit validation.
+  - Run deterministic checks before declaring completion.
+  - Leave durable handoff notes for the next agent session.
+
+local_overrides:
+  default_install: false
+  install_flag: "--install-local-overrides claude,codex,augment"
+  policy: "Repo-local .claude, .codex, and .augment files are optional overrides only; existing local harnesses are detected and preserved by default."
+
+detected_local_harnesses:
+{{detected_harnesses_yaml}}
+
+profiles:
+  default_standards:
+    command: "python3 standards/checker/run.py --repo-path . --profile org-standards --include-optional --output reports/org-standards.json --markdown-output reports/org-standards.md"
+    expected_outputs:
+      - reports/org-standards.json
+      - reports/org-standards.md
+  project_codeguard_security:
+    command: "python3 standards/checker/run.py --repo-path . --profile project-codeguard-security --output reports/project-codeguard-security.json --markdown-output reports/project-codeguard-security.md"
+    expected_outputs:
+      - reports/project-codeguard-security.json
+      - reports/project-codeguard-security.md
+
+archetypes:
+  feature:
+    blueprint: .adlc/blueprints/feature-blueprint.yaml
+    proof_required:
+      - acceptance checks
+      - focused tests
+      - standards report
+  bugfix:
+    blueprint: .adlc/blueprints/bugfix-blueprint.yaml
+    proof_required:
+      - reproduction evidence
+      - regression test
+      - fix verification
+  unit_test:
+    blueprint: .adlc/blueprints/unit-test-blueprint.yaml
+    proof_required:
+      - test run output
+      - coverage evidence when available
+  orchestration:
+    blueprint: .adlc/blueprints/orchestration-blueprint.yaml
+    proof_required:
+      - repo inventory
+      - per-repo report summary
+      - org metrics rollup
+
+status:
+  file: .adlc/status.md
+  update_policy: append after every bounded work item or failed verification loop
+
+lifecycle:
+  file: .adlc/lifecycle.json
+  phases:
+    - Discover
+    - Scaffold
+    - Refresh
+    - Blueprint
+    - Plan
+    - Execute
+    - Verify
+    - Repair
+    - Prove
+    - Report
+
+plans:
+  directory: .adlc/plans
+  canonical_run_shape:
+    - plan.md
+    - plan.yaml
+    - tests-and-evals.md
+    - work-items.md
+    - state.json
+  source_of_truth: ".adlc/plans/<YYYY-MM-DD>_<task-slug>/"
+
+proof:
+  directory: .adlc/proofs
+  minimum_fields:
+    - task id
+    - revision
+    - commands run
+    - result summary
+    - remaining risks

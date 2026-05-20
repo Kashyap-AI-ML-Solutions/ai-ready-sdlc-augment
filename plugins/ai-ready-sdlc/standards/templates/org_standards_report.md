@@ -15,6 +15,7 @@
 | AI readiness | |
 | Bug triage | |
 | Requirements to tests | |
+| Project CodeGuard security | |
 
 ## Findings
 

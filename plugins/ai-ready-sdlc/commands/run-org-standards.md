@@ -17,6 +17,17 @@ Expected coverage:
 
 This is the umbrella command. It already covers the core standards lanes that would otherwise be checked separately.
 
+This command writes repo-local reports. It does not publish to the central `adlc-org-status` repo by itself.
+
+For central publication, run the ADLC harness sequence and then `publish-adlc-snapshot`, or use `run-org-repo-status`:
+
+```text
+/ai-ready-sdlc:create-adlc-harness
+/ai-ready-sdlc:steer-adlc-harness
+/ai-ready-sdlc:run-org-standards
+/ai-ready-sdlc:publish-adlc-snapshot
+```
+
 Preferred execution model:
 
 - use the shared runner bundled with this Augment plugin package,

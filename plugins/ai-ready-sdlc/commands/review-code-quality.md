@@ -11,3 +11,11 @@ Preferred execution model:
 - use the shared runner bundled with this Augment plugin package,
 - target the current repository with `--repo-path .`,
 - write outputs to `reports/code-quality.json` and `reports/code-quality.md`.
+
+When the next step is remediation, route through `steer-adlc-harness` with task type `remediation` before editing:
+
+```bash
+python3 scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "Code quality remediation" --source-report reports/code-quality.json
+```
+
+The canonical plan must include language-specific checks, standards gates, and proof requirements under `.adlc/plans/<run>/`.

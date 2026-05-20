@@ -5,6 +5,14 @@ description: Map Project CodeGuard findings to secure remediation patterns and f
 
 Use this skill when the repository already has Project CodeGuard findings and the team needs secure remediation patterns.
 
+Route remediation through `steer-adlc-harness` before code changes. The canonical remediation plan must live under `.adlc/plans/<run>/` and include tests, evals, security checks, standards checks, work items, and proof requirements.
+
+Preferred conductor:
+
+```bash
+python3 scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "Project CodeGuard remediation" --source-report reports/project-codeguard-security.json
+```
+
 Preferred references:
 
 - `../../docs/project-codeguard-fix-cookbook.md`

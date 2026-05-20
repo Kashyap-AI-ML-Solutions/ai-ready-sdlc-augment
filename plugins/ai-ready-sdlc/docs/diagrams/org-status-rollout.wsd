@@ -1,0 +1,44 @@
+title ADLC Org Status Rollout
+
+participant "Program Owner" as Owner
+participant "ADLC Plugin" as Plugin
+participant "GitHub MCP or gh" as GitHub
+participant "Org Status Repo" as StatusRepo
+participant "Repo Inventory" as Inventory
+participant "Repo Worker" as Worker
+participant "Target Repo" as Target
+participant ".adlc Harness" as Harness
+participant "Metrics Aggregator" as Metrics
+
+Owner->Plugin: Create or update org ADLC status repo
+Plugin->GitHub: Check connector and permissions
+GitHub-->Plugin: Org access and repo search result
+
+alt Status repo missing
+  Plugin->GitHub: Create repo
+  GitHub-->Plugin: Repo URL
+  Plugin->StatusRepo: Commit starter layout
+else Status repo exists
+  Plugin->StatusRepo: Pull latest layout
+end
+
+Owner->Inventory: Provide repo list
+Plugin->Inventory: Normalize repos.yaml
+
+loop For each target repo, preferably in parallel-capable batches
+  Plugin->Worker: Assign repo and output path
+  Worker->Target: Confirm platform plugin install
+  Worker->Harness: Initialize or refresh .adlc only
+  Worker->Target: Detect existing .claude/.codex/.augment/Superpowers harnesses
+  Worker->Harness: Record detected harnesses and lifecycle status
+  Worker->Target: Run org standards
+  Target-->Worker: reports, .adlc/status.md, lifecycle, proof notes
+  Worker->StatusRepo: Copy run snapshot
+  Worker->StatusRepo: Refresh latest snapshot
+end
+
+Plugin->Metrics: Aggregate latest reports
+Metrics->StatusRepo: Write metrics/org-metrics.json
+Metrics->StatusRepo: Write metrics/org-metrics.md
+Metrics->StatusRepo: Write dashboard markdown
+Plugin-->Owner: Report coverage, security, gaps, quick wins, and next plan
