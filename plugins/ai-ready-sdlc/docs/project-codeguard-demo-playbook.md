@@ -81,8 +81,8 @@ After the direct runner demo, validate the installed plugin surfaces too:
   - `Use the ai-ready-sdlc plugin and fix Project CodeGuard findings in this repository.`
   - `Explain the Project CodeGuard findings and recommended remediations for this repository.`
 - Augment:
-  - `/ai-ready-sdlc:review-project-codeguard-security`
-  - `/ai-ready-sdlc:fix-project-codeguard-findings`
-  - `/ai-ready-sdlc:explain-project-codeguard-findings`
+  - `/ai-ready-sdlc--ai-ready-sdlc-augment:review-project-codeguard-security`
+  - `/ai-ready-sdlc--ai-ready-sdlc-augment:fix-project-codeguard-findings`
+  - `/ai-ready-sdlc--ai-ready-sdlc-augment:explain-project-codeguard-findings`
 
 For the fix workflow, confirm the plugin creates a remediation plan through `scripts/steer-adlc-harness.py` before implementation and writes the canonical artifacts under `.adlc/plans/<run>/`.
