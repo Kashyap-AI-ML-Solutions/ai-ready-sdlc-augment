@@ -9,7 +9,10 @@ After publishing this marketplace repository to GitHub or GitHub Enterprise, ins
 ```sh
 auggie plugin marketplace add Kashyap-AI-ML-Solutions/ai-ready-sdlc-augment
 auggie plugin install ai-ready-sdlc@ai-ready-sdlc-augment
+auggie plugin list
 ```
+
+`auggie plugin list` must show `[x] ai-ready-sdlc@ai-ready-sdlc-augment`. If it shows `[ ]` or the Auggie plugin page says `disabled`, run `auggie plugin install ai-ready-sdlc@ai-ready-sdlc-augment` and restart Auggie before using `/ai-ready-sdlc:*`.
 
 Use project scope only when a specific repository should carry `.augment/settings.json` enablement:
 

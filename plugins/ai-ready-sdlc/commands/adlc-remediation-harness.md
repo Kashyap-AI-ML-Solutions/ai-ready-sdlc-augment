@@ -11,7 +11,7 @@ Use this command for Project CodeGuard findings, standards findings, security cl
 Required conductor call:
 
 ```bash
-python3 scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "<remediation title>" --source-report "<optional report path>"
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "<remediation title>" --source-report "<optional report path>"
 ```
 
 The generated plan must live under `.adlc/plans/<YYYY-MM-DD>_<task-slug>/` and include tests, evals, security checks, standards checks, bounded work items, and proof requirements.

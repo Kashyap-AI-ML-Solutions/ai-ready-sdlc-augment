@@ -10,7 +10,7 @@ Route remediation through `steer-adlc-harness` before code changes. The canonica
 Preferred conductor:
 
 ```bash
-python3 scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "Project CodeGuard remediation" --source-report reports/project-codeguard-security.json
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "Project CodeGuard remediation" --source-report reports/project-codeguard-security.json
 ```
 
 Preferred references:

@@ -21,5 +21,5 @@ Required behavior:
 Deterministic conductor:
 
 ```bash
-python3 scripts/steer-adlc-harness.py --repo-path . --task-type feature --title "<task title>"
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/steer-adlc-harness.py --repo-path . --task-type feature --title "<task title>"
 ```

@@ -8,6 +8,12 @@ Create a scoped, plan-only ADLC remediation plan from `reports/org-standards.jso
 
 This command must not edit code by default. It exists to avoid unbounded "fix everything" runs.
 
+Execution gate:
+
+- This command is active only when the plugin is installed and enabled. In Auggie, `auggie plugin list` must show `[x] ai-ready-sdlc@ai-ready-sdlc-augment`; if it shows `[ ]` or `/plugins` says `disabled`, stop and enable the plugin first.
+- First action: run the bundled remediation planner below. Do not web search, fetch external ADLC docs, or run repo-wide manual discovery before the bundled command.
+- Do not look for `fix-org-standards-findings` on `PATH`; use the plugin-bundled script path.
+
 Preferred workflow:
 
 - ensure `reports/org-standards.json` exists by running `run-org-standards`,
@@ -20,7 +26,7 @@ Preferred workflow:
 Default low-priority slice:
 
 ```bash
-python3 scripts/fix-org-standards-findings.py --repo-path . --source-report reports/org-standards.json --priority low --max-items 3
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/fix-org-standards-findings.py --repo-path . --source-report reports/org-standards.json --priority low --max-items 3
 ```
 
 For a different scoped slice, change `--priority`, `--area`, or `--max-items`. Do not implement selected work items unless the user explicitly approves.

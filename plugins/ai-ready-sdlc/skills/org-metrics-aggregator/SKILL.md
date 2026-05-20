@@ -8,7 +8,7 @@ Use this skill when a collection repo contains ADLC `org-standards.json` snapsho
 Run:
 
 ```bash
-python3 scripts/aggregate-org-metrics.py --collection-repo <collection-repo> --output metrics/org-metrics.json --markdown-output metrics/org-metrics.md
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/aggregate-org-metrics.py --collection-repo <collection-repo> --output metrics/org-metrics.json --markdown-output metrics/org-metrics.md
 ```
 
 The aggregator computes coverage policy adoption, missing coverage artifacts, high security findings, too many security findings, large gaps, small quick wins, complexity risk, maintainability pass signals, and tool installation gaps.

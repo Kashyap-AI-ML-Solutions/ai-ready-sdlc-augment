@@ -16,4 +16,4 @@ Expected coverage:
 
 Preferred shared runner:
 
-- `python3 standards/checker/run.py --repo-path . --profile project-codeguard-security --output reports/project-codeguard-security.json --markdown-output reports/project-codeguard-security.md`
+- `python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/standards/checker/run.py --repo-path . --profile project-codeguard-security --output reports/project-codeguard-security.json --markdown-output reports/project-codeguard-security.md`

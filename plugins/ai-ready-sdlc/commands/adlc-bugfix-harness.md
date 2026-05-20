@@ -11,7 +11,7 @@ Use this command when the request fixes a defect, regression, incident, failing 
 Required conductor call:
 
 ```bash
-python3 scripts/steer-adlc-harness.py --repo-path . --task-type bugfix --title "<bugfix title>"
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/steer-adlc-harness.py --repo-path . --task-type bugfix --title "<bugfix title>"
 ```
 
 The generated plan must live under `.adlc/plans/<YYYY-MM-DD>_<task-slug>/` and include reproduction evidence, regression test expectations, focused verification, work items, and proof requirements.

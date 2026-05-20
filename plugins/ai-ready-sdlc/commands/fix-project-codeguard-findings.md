@@ -15,7 +15,7 @@ Preferred workflow:
 - invoke `steer-adlc-harness` with task type `remediation`:
 
 ```bash
-python3 scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "Project CodeGuard remediation" --source-report reports/project-codeguard-security.json
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/steer-adlc-harness.py --repo-path . --task-type remediation --title "Project CodeGuard remediation" --source-report reports/project-codeguard-security.json
 ```
 
 - create a canonical plan under `.adlc/plans/<YYYY-MM-DD>_<task-slug>/`,

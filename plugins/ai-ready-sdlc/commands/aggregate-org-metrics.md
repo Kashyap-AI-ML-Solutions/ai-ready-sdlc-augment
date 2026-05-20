@@ -9,7 +9,7 @@ Aggregate collected ADLC standards reports into org-level metrics.
 Preferred shared command:
 
 ```bash
-python3 scripts/aggregate-org-metrics.py --collection-repo <collection-repo> --output metrics/org-metrics.json --markdown-output metrics/org-metrics.md
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/aggregate-org-metrics.py --collection-repo <collection-repo> --output metrics/org-metrics.json --markdown-output metrics/org-metrics.md
 ```
 
 Expected metrics:

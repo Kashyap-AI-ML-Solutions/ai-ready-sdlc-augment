@@ -15,7 +15,7 @@ Preferred execution model:
 When the next step is adding or changing tests, route through `steer-adlc-harness` with task type `unit-test` before implementation:
 
 ```bash
-python3 scripts/steer-adlc-harness.py --repo-path . --task-type unit-test --title "Requirements to tests gap closure" --source-report reports/requirements-to-tests.json
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/steer-adlc-harness.py --repo-path . --task-type unit-test --title "Requirements to tests gap closure" --source-report reports/requirements-to-tests.json
 ```
 
 The canonical test-expansion plan must live under `.adlc/plans/<run>/`.

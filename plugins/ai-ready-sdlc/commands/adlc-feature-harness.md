@@ -11,7 +11,7 @@ Use this command when the request adds or changes user-visible behavior, API beh
 Required conductor call:
 
 ```bash
-python3 scripts/steer-adlc-harness.py --repo-path . --task-type feature --title "<feature title>"
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/scripts/steer-adlc-harness.py --repo-path . --task-type feature --title "<feature title>"
 ```
 
 The generated plan must live under `.adlc/plans/<YYYY-MM-DD>_<task-slug>/` and include acceptance checks, focused tests, evals when relevant, standards checks, work items, and proof requirements.

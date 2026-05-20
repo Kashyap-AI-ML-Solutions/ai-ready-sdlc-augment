@@ -19,6 +19,12 @@ This is the umbrella command. It already covers the core standards lanes that wo
 
 This command writes repo-local reports. It does not publish to the central `adlc-org-status` repo by itself.
 
+Execution gate:
+
+- This command is active only when the plugin is installed and enabled. In Auggie, `auggie plugin list` must show `[x] ai-ready-sdlc@ai-ready-sdlc-augment`; if it shows `[ ]` or `/plugins` says `disabled`, stop and enable the plugin first.
+- First action: run the bundled standards checker. Do not web search, fetch external ADLC docs, or run repo-wide manual discovery before the bundled command.
+- Do not look for `run-org-standards` on `PATH`; use the plugin-bundled checker path.
+
 For central publication, run the ADLC harness sequence and then `publish-adlc-snapshot`, or use `run-org-repo-status`:
 
 ```text
@@ -30,7 +36,8 @@ For central publication, run the ADLC harness sequence and then `publish-adlc-sn
 
 Preferred execution model:
 
-- use the shared runner bundled with this Augment plugin package,
-- target the current repository with `--repo-path .`,
-- include optional checks when available,
-- write outputs to `reports/org-standards.json` and `reports/org-standards.md`.
+```bash
+python3 "$HOME"/.augment/plugins/marketplaces/ai-ready-sdlc-augment/plugins/ai-ready-sdlc/standards/checker/run.py --repo-path . --profile org-standards --include-optional --output reports/org-standards.json --markdown-output reports/org-standards.md
+```
+
+Use the shared runner bundled with this Augment plugin package, target the current repository with `--repo-path .`, include optional checks when available, and write outputs to `reports/org-standards.json` and `reports/org-standards.md`.
