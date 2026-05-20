@@ -34,10 +34,11 @@ The policy authority for this package is:
   - `run-org-standards`
   - `run-org-repo-status`
   - `aggregate-org-metrics`
-  - `review-code-quality`
-  - `review-project-codeguard-security`
-  - `fix-project-codeguard-findings`
-  - `explain-project-codeguard-findings`
+      - `review-code-quality`
+      - `review-project-codeguard-security`
+      - `fix-project-codeguard-findings`
+      - `fix-org-standards-findings`
+      - `explain-project-codeguard-findings`
   - `triage-bugs`
   - `check-ai-readiness`
   - `requirements-to-tests`

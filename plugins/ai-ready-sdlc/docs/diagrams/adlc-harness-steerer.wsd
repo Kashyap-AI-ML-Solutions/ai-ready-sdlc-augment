@@ -30,6 +30,10 @@ note over Plugin,Repo: Repo-local platform files are optional overrides only
 alt fix-project-codeguard-findings
   Conductor->Repo: Read reports/project-codeguard-security.json
   Conductor->Harness: Set remediation task and source report
+else fix-org-standards-findings
+  Plugin->Repo: Read reports/org-standards.json
+  Plugin->Harness: Select scoped recommendations
+  Plugin->Plan: Write selected and out-of-scope items
 else Feature, bugfix, unit-test, or orchestration
   Conductor->Harness: Classify task and select blueprint
 end

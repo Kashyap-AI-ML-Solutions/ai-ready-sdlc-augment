@@ -8,6 +8,12 @@ After publishing this marketplace repository to GitHub or GitHub Enterprise, ins
 
 ```sh
 auggie plugin marketplace add Kashyap-AI-ML-Solutions/ai-ready-sdlc-augment
+auggie plugin install ai-ready-sdlc@ai-ready-sdlc-augment
+```
+
+Use project scope only when a specific repository should carry `.augment/settings.json` enablement:
+
+```sh
 auggie plugin install ai-ready-sdlc@ai-ready-sdlc-augment --project
 ```
 
@@ -37,4 +43,5 @@ To recommend the marketplace for a specific repository, add this to `.augment/se
 - `/ai-ready-sdlc:review-code-quality`
 - `/ai-ready-sdlc:review-project-codeguard-security`
 - `/ai-ready-sdlc:fix-project-codeguard-findings`
+- `/ai-ready-sdlc:fix-org-standards-findings`
 - `/ai-ready-sdlc:explain-project-codeguard-findings`
