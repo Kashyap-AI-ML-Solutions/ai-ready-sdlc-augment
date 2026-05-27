@@ -38,9 +38,14 @@ IGNORE_DIRS = {
 }
 
 IGNORE_TOP_LEVEL_DIRS = {
+    ".adlc",
     ".agents",
+    ".augment",
     ".claude",
     ".claude-marketplace",
+    ".codex",
+    ".cursor",
+    ".windsurf",
     "plugins",
 }
 
@@ -255,12 +260,82 @@ def load_quality_thresholds(repo_root: Path) -> dict[str, Any]:
         return json.load(handle)
 
 
+def should_ignore_path(rel_path: Path) -> bool:
+    parts = rel_path.parts
+    if parts and parts[0] in IGNORE_TOP_LEVEL_DIRS:
+        return True
+    return any(part in IGNORE_DIRS for part in parts)
+
+
+def git_visible_files(repo_path: Path) -> list[Path] | None:
+    if not (repo_path / ".git").exists():
+        return None
+    try:
+        result = subprocess.run(
+            ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+            cwd=repo_path,
+            text=True,
+            capture_output=True,
+            timeout=20,
+            check=False,
+        )
+    except OSError:
+        return None
+
+    if result.returncode != 0:
+        return None
+
+    files: list[Path] = []
+    for item in result.stdout.split("\0"):
+        if not item:
+            continue
+        rel_path = Path(item)
+        if rel_path.is_absolute() or should_ignore_path(rel_path):
+            continue
+        if (repo_path / rel_path).is_file():
+            files.append(rel_path)
+    return files
+
+
+def record_scanned_file(
+    rel_path: Path,
+    files: list[Path],
+    file_names: set[str],
+    dir_names: set[str],
+    ext_counter: Counter[str],
+    files_by_ext: dict[str, list[Path]],
+) -> None:
+    files.append(rel_path)
+    file_names.add(rel_path.name)
+    for parent in rel_path.parents:
+        if parent == Path("."):
+            continue
+        dir_names.add(parent.as_posix())
+        dir_names.add(parent.name)
+    suffix = rel_path.suffix.lower()
+    if suffix:
+        ext_counter[suffix] += 1
+        files_by_ext[suffix].append(rel_path)
+
+
 def scan_repo(repo_path: Path) -> RepoScan:
     files: list[Path] = []
     file_names: set[str] = set()
     dir_names: set[str] = set()
     ext_counter: Counter[str] = Counter()
     files_by_ext: dict[str, list[Path]] = defaultdict(list)
+
+    visible_files = git_visible_files(repo_path)
+    if visible_files is not None:
+        for rel_path in visible_files:
+            record_scanned_file(rel_path, files, file_names, dir_names, ext_counter, files_by_ext)
+        return RepoScan(
+            files=files,
+            file_names=file_names,
+            dir_names=dir_names,
+            ext_counter=ext_counter,
+            files_by_ext=files_by_ext,
+        )
 
     for root, dirs, filenames in os.walk(repo_path):
         rel_root = Path(root).relative_to(repo_path)
@@ -273,12 +348,9 @@ def scan_repo(repo_path: Path) -> RepoScan:
         for filename in filenames:
             path = Path(root) / filename
             rel_path = path.relative_to(repo_path)
-            files.append(rel_path)
-            file_names.add(filename)
-            suffix = rel_path.suffix.lower()
-            if suffix:
-                ext_counter[suffix] += 1
-                files_by_ext[suffix].append(rel_path)
+            if should_ignore_path(rel_path):
+                continue
+            record_scanned_file(rel_path, files, file_names, dir_names, ext_counter, files_by_ext)
 
     return RepoScan(
         files=files,
@@ -360,7 +432,22 @@ def fill_command(template: str, language_def: dict[str, Any], scan: RepoScan) ->
     return command
 
 
-def command_available(command: str, repo_path: Path) -> bool:
+def command_roots(language_def: dict[str, Any], scan: RepoScan) -> list[Path]:
+    if language_def["language"] != "javascript-typescript":
+        return [Path(".")]
+
+    roots = sorted({path.parent for path in scan.files if path.name == "package.json"})
+    return roots or [Path(".")]
+
+
+def format_command(command: str, cwd: Path) -> str:
+    if cwd == Path("."):
+        return command
+    return f"(cd {shlex.quote(cwd.as_posix())} && {command})"
+
+
+def command_available(command: str, repo_path: Path, cwd: Path = Path(".")) -> bool:
+    command_root = repo_path / cwd
     alternatives = [item.strip() for item in command.split("||")]
     for alternative in alternatives:
         if not alternative:
@@ -375,22 +462,27 @@ def command_available(command: str, repo_path: Path) -> bool:
         if executable == "npx":
             package_command = next((part for part in parts[1:] if not part.startswith("-")), "")
             if package_command:
-                local_bin = repo_path / "node_modules" / ".bin" / package_command
+                local_bin = command_root / "node_modules" / ".bin" / package_command
                 if local_bin.exists():
                     return True
             continue
         if executable.startswith("./"):
-            if (repo_path / executable[2:]).exists():
+            if (command_root / executable[2:]).exists():
                 return True
         elif shutil.which(executable):
             return True
     return False
 
 
-def run_command(command: str, repo_path: Path, timeout: int) -> subprocess.CompletedProcess[str]:
+def run_command(
+    command: str,
+    repo_path: Path,
+    timeout: int,
+    cwd: Path = Path("."),
+) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         command,
-        cwd=repo_path,
+        cwd=repo_path / cwd,
         shell=True,
         text=True,
         capture_output=True,
@@ -430,14 +522,110 @@ def dimension_from_category(category: str) -> str:
 
 def score_dimension(statuses: list[str]) -> str:
     if not statuses:
-        return "not_run"
+        return "not_applicable"
     if any(status == "failed" for status in statuses):
         return "fail"
+    if all(status in {"skipped", "planned"} for status in statuses):
+        return "not_run"
     if any(status == "passed" for status in statuses):
         if any(status == "skipped" for status in statuses):
             return "warn"
         return "pass"
     return "warn"
+
+
+def parse_json_output(text: str) -> Any:
+    stripped = text.strip()
+    if not stripped:
+        return None
+    for opener in ("[", "{"):
+        index = stripped.find(opener)
+        if index >= 0:
+            try:
+                return json.loads(stripped[index:])
+            except json.JSONDecodeError:
+                return None
+    return None
+
+
+def summarize_cyclomatic_complexity(payload: Any) -> dict[str, Any] | None:
+    if not isinstance(payload, list):
+        return None
+
+    file_count = 0
+    complexity_sum = 0
+    max_file_complexity = 0
+    max_function_complexity = 0
+    level_counts: Counter[str] = Counter()
+
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        file_count += 1
+        try:
+            file_complexity = int(item.get("complexitySum", 0))
+        except (TypeError, ValueError):
+            file_complexity = 0
+        complexity_sum += file_complexity
+        max_file_complexity = max(max_file_complexity, file_complexity)
+        level_counts[str(item.get("complexityLevel", "unknown"))] += 1
+
+        for function_item in item.get("functionComplexities", []):
+            if not isinstance(function_item, dict):
+                continue
+            try:
+                function_complexity = int(function_item.get("complexity", 0))
+            except (TypeError, ValueError):
+                function_complexity = 0
+            max_function_complexity = max(max_function_complexity, function_complexity)
+
+    return {
+        "files_analyzed": file_count,
+        "complexity_sum": complexity_sum,
+        "max_file_complexity": max_file_complexity,
+        "max_function_complexity": max_function_complexity,
+        "level_counts": dict(level_counts),
+    }
+
+
+def summarize_fta(payload: Any) -> dict[str, Any] | None:
+    if not isinstance(payload, list):
+        return None
+
+    scores: list[float] = []
+    cyclo_values: list[float] = []
+    assessment_counts: Counter[str] = Counter()
+
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        try:
+            scores.append(float(item.get("fta_score", 0)))
+        except (TypeError, ValueError):
+            pass
+        try:
+            cyclo_values.append(float(item.get("cyclo", 0)))
+        except (TypeError, ValueError):
+            pass
+        assessment_counts[str(item.get("assessment", "unknown"))] += 1
+
+    average_score = round(sum(scores) / len(scores), 2) if scores else None
+    return {
+        "files_analyzed": len(scores),
+        "max_fta_score": round(max(scores), 2) if scores else None,
+        "average_fta_score": average_score,
+        "max_cyclomatic_complexity": round(max(cyclo_values), 2) if cyclo_values else None,
+        "assessment_counts": dict(assessment_counts),
+    }
+
+
+def extract_tool_metrics(tool_name: str, stdout: str) -> dict[str, Any] | None:
+    payload = parse_json_output(stdout)
+    if tool_name == "cyclomatic-complexity":
+        return summarize_cyclomatic_complexity(payload)
+    if tool_name == "fta-cli":
+        return summarize_fta(payload)
+    return None
 
 
 def severity_for(category: str, status: str) -> str:
@@ -539,6 +727,8 @@ def summarize_statuses(statuses: Iterable[str]) -> str:
     if not status_list:
         return "not_run"
     if any(status == "fail" for status in status_list):
+        return "fail"
+    if any(status == "not_run" for status in status_list):
         return "fail"
     if any(status == "warn" for status in status_list):
         return "warn"
@@ -681,48 +871,53 @@ def evaluate_code_quality(
         if include_optional:
             tools.extend(language_def.get("optional_tools", []))
 
-        for tool in tools:
-            command = fill_command(tool["command"], language_def, scan)
-            available = command_available(command, repo_path)
+        for cwd in command_roots(language_def, scan):
+            for tool in tools:
+                command = fill_command(tool["command"], language_def, scan)
+                available = command_available(command, repo_path, cwd)
 
-            run_record = {
-                "language": language_def["language"],
-                "tool": tool["tool"],
-                "category": tool["category"],
-                "status": "skipped",
-                "command": command,
-                "binary": tool.get("binary", ""),
-                "install": tool.get("install", {}),
-            }
+                run_record = {
+                    "language": language_def["language"],
+                    "tool": tool["tool"],
+                    "category": tool["category"],
+                    "status": "skipped",
+                    "command": format_command(command, cwd),
+                    "cwd": cwd.as_posix(),
+                    "binary": tool.get("binary", ""),
+                    "install": tool.get("install", {}),
+                }
 
-            if not available:
-                run_record["summary"] = "tool not available in current environment"
+                if not available:
+                    run_record["summary"] = "tool not available in current environment"
+                    tool_runs.append(run_record)
+                    continue
+
+                if dry_run:
+                    run_record["status"] = "planned"
+                    run_record["summary"] = "tool available; command resolved but not executed"
+                    tool_runs.append(run_record)
+                    continue
+
+                try:
+                    completed = run_command(command, repo_path, timeout_seconds, cwd)
+                except subprocess.TimeoutExpired:
+                    run_record["status"] = "failed"
+                    run_record["summary"] = f"timed out after {timeout_seconds} seconds"
+                    tool_runs.append(run_record)
+                    continue
+
+                summary = truncate(completed.stdout or completed.stderr or "completed with no output")
+                if completed.returncode == 0:
+                    run_record["status"] = "passed"
+                elif missing_tool_output(summary):
+                    run_record["status"] = "skipped"
+                else:
+                    run_record["status"] = "failed"
+                metrics = extract_tool_metrics(tool["tool"], completed.stdout)
+                if metrics:
+                    run_record["metrics"] = metrics
+                run_record["summary"] = summary
                 tool_runs.append(run_record)
-                continue
-
-            if dry_run:
-                run_record["status"] = "planned"
-                run_record["summary"] = "tool available; command resolved but not executed"
-                tool_runs.append(run_record)
-                continue
-
-            try:
-                completed = run_command(command, repo_path, timeout_seconds)
-            except subprocess.TimeoutExpired:
-                run_record["status"] = "failed"
-                run_record["summary"] = f"timed out after {timeout_seconds} seconds"
-                tool_runs.append(run_record)
-                continue
-
-            summary = truncate(completed.stdout or completed.stderr or "completed with no output")
-            if completed.returncode == 0:
-                run_record["status"] = "passed"
-            elif missing_tool_output(summary):
-                run_record["status"] = "skipped"
-            else:
-                run_record["status"] = "failed"
-            run_record["summary"] = summary
-            tool_runs.append(run_record)
 
     return detected_languages, build_code_quality_report(repo_path, detected_languages, tool_runs)
 
@@ -1399,7 +1594,11 @@ def evaluate_requirements_to_tests(
 
 def overall_status(statuses: Iterable[str]) -> str:
     status_list = list(statuses)
+    if not status_list:
+        return "not_run"
     if any(status == "fail" for status in status_list):
+        return "fail"
+    if any(status == "not_run" for status in status_list):
         return "fail"
     if any(status == "warn" for status in status_list):
         return "warn"

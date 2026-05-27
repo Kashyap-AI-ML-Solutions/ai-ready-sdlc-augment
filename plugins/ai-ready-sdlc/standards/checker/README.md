@@ -24,6 +24,7 @@ python3 standards/checker/run.py \
 ## Notes
 
 - Tool availability is checked at runtime.
-- Missing tools are reported as `skipped`, not treated as runner crashes.
+- Missing selected tools are reported as `skipped`, not treated as runner crashes, but a required evaluation dimension with only skipped tools scores `not_run` and blocks an overall `pass`.
 - The runner uses `standards/tooling/index.json` as its machine-readable registry and the YAML files under `standards/tooling/` as human-readable reference material.
 - `org-standards` is the umbrella profile for the full shared engine.
+- JavaScript and TypeScript repositories use package-root execution. The required matrix includes `eslint`, `tsc`, `npm audit`, `cyclomatic-complexity` for complexity metrics, and `fta-cli` for maintainability metrics.

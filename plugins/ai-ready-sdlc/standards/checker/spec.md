@@ -40,6 +40,8 @@ The standards checker evaluates repositories, pull requests, issues, and test pl
 
 - Detect repository languages.
 - Select the relevant evaluation tools from the organization tool matrix.
+- For JavaScript and TypeScript, detect package roots by `package.json` so nested application packages are evaluated from the directory that owns their lockfile and local tooling.
+- In Git repositories, scan tracked files plus untracked non-ignored files using the repo's ignore rules. Also ignore generated ADLC and platform harness state such as `.adlc/`, `.codex/`, `.claude/`, and `.augment/` so reports are not polluted by proof files, ignored helper trees, or local plugin artifacts.
 - Run or request code quality, complexity, security, style, and maintainability checks.
 - Normalize outputs into a shared report contract.
 
@@ -65,6 +67,7 @@ For code quality evaluation, the checker should also support:
 
 - `languages_detected`
 - `tools_run`
+- `tools_run.cwd`
 - `dimension_scores`
 - `recommendations`
 - `report_location`

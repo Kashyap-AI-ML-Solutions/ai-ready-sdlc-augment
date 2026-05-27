@@ -28,6 +28,11 @@ REQUIRED_REPORTS = [
     "reports/requirements-to-tests.md",
 ]
 
+OPTIONAL_REPORTS = [
+    "reports/enhanced-verification.json",
+    "reports/enhanced-verification.md",
+]
+
 REQUIRED_ADLC = [
     ".adlc/harness.yaml",
     ".adlc/lifecycle.json",
@@ -133,6 +138,10 @@ def should_skip(path: Path) -> bool:
     return any(part in IGNORE_PARTS for part in path.parts)
 
 
+def should_skip_optional_evidence(path: Path) -> bool:
+    return should_skip(path) or any(part in {".adlc", "reports"} for part in path.parts)
+
+
 def add_required_file(repo_path: Path, rel_path: str, files: list[SnapshotFile], missing: list[str]) -> None:
     source = repo_path / rel_path
     snapshot_path = rel_path[1:] if rel_path.startswith(".adlc/") else rel_path
@@ -145,6 +154,20 @@ def add_required_file(repo_path: Path, rel_path: str, files: list[SnapshotFile],
             snapshot_path=snapshot_path,
             content=text_or_empty(source),
             required=True,
+        )
+    )
+
+
+def add_optional_report(repo_path: Path, rel_path: str, files: list[SnapshotFile]) -> None:
+    source = repo_path / rel_path
+    if not source.exists() or not source.is_file():
+        return
+    files.append(
+        SnapshotFile(
+            source_path=source,
+            snapshot_path=rel_path,
+            content=text_or_empty(source),
+            required=False,
         )
     )
 
@@ -191,7 +214,7 @@ def add_optional_evidence(repo_path: Path, files: list[SnapshotFile]) -> None:
         if not source.is_file():
             continue
         rel = source.relative_to(repo_path)
-        if should_skip(rel):
+        if should_skip_optional_evidence(rel):
             continue
         category = OPTIONAL_EVIDENCE_NAMES.get(source.name)
         if category is None:
@@ -261,6 +284,8 @@ def collect_snapshot(repo_path: Path, *, org: str, repo_name: str, run_id: str) 
 
     for rel_path in REQUIRED_REPORTS:
         add_required_file(repo_path, rel_path, files, missing)
+    for rel_path in OPTIONAL_REPORTS:
+        add_optional_report(repo_path, rel_path, files)
     for rel_path in REQUIRED_ADLC:
         add_required_file(repo_path, rel_path, files, missing)
 

@@ -39,8 +39,22 @@ properties:
       - immediate_attention_count
   complexity:
     type: object
+    properties:
+      risk_count:
+        type: integer
+      not_run_count:
+        type: integer
+      max_function_complexity:
+        type: [number, "null"]
   maintainability:
     type: object
+    properties:
+      pass_count:
+        type: integer
+      not_run_count:
+        type: integer
+      max_fta_score:
+        type: [number, "null"]
   tool_installation_gaps:
     type: object
   recommendation_priority_counts:

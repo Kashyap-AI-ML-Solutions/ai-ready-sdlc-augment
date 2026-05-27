@@ -12,6 +12,12 @@ required_tools:
   - tool: npm-audit
     category: security
     command: npm audit --json
+  - tool: cyclomatic-complexity
+    category: complexity
+    command: npx --no-install cyclomatic-complexity './**/*.{js,jsx,ts,tsx}' --threshold-warnings 10 --threshold-errors 20 --exclude '**/{node_modules,coverage,dist,build,.adlc,reports}/**' --json
+  - tool: fta-cli
+    category: maintainability
+    command: npx --no-install fta --json --score-cap 75 .
 optional_tools:
   - tool: prettier
     category: style

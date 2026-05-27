@@ -131,6 +131,16 @@ def code_quality_dimensions(report: dict[str, Any]) -> dict[str, str]:
     return {str(key): str(value) for key, value in dimensions.items()}
 
 
+def tool_metrics(report: dict[str, Any], tool_name: str) -> dict[str, Any]:
+    code_quality = get_area(report, "code_quality")
+    for run in code_quality.get("tools_run", []):
+        if not isinstance(run, dict) or run.get("tool") != tool_name:
+            continue
+        metrics = run.get("metrics", {})
+        return metrics if isinstance(metrics, dict) else {}
+    return {}
+
+
 def tool_install_gaps(report: dict[str, Any]) -> list[str]:
     code_quality = get_area(report, "code_quality")
     gaps: list[str] = []
@@ -152,7 +162,12 @@ def repo_summary(path: Path, collection_repo: Path, report: dict[str, Any]) -> d
     high_security = high_security_count(report)
     total_security = len(security)
     problems = area_problem_count(report)
-    overall = str(report.get("overall_status", "unknown"))
+    reported_overall = str(report.get("overall_status", "unknown"))
+    required_not_run = any(
+        dimensions.get(dimension) == "not_run"
+        for dimension in ("code_quality", "complexity", "security", "maintainability")
+    )
+    overall = "fail" if required_not_run and reported_overall != "fail" else reported_overall
 
     return {
         "key": repo_key(path, collection_repo, report),
@@ -160,12 +175,15 @@ def repo_summary(path: Path, collection_repo: Path, report: dict[str, Any]) -> d
         "revision": report.get("revision", "unknown"),
         "report_path": str(path.relative_to(collection_repo)),
         "overall_status": overall,
+        "reported_overall_status": reported_overall,
         "area_problem_count": problems,
         "coverage": coverage,
         "security_findings": total_security,
         "high_or_critical_security_findings": high_security,
         "complexity": dimensions.get("complexity", "not_run"),
         "maintainability": dimensions.get("maintainability", "not_run"),
+        "complexity_metrics": tool_metrics(report, "cyclomatic-complexity"),
+        "maintainability_metrics": tool_metrics(report, "fta-cli"),
         "recommendation_counts": dict(priorities),
         "recommendation_total": sum(priorities.values()),
         "tool_install_gaps": tool_install_gaps(report),
@@ -188,6 +206,20 @@ def aggregate(summaries: list[dict[str, Any]], security_issue_threshold: int) ->
     too_many_security = [item for item in summaries if item["security_findings"] >= security_issue_threshold]
     complexity_risk = [item for item in summaries if item["complexity"] in {"fail", "warn"}]
     maintainability_pass = [item for item in summaries if item["maintainability"] == "pass"]
+    complexity_not_run = [item for item in summaries if item["complexity"] == "not_run"]
+    maintainability_not_run = [item for item in summaries if item["maintainability"] == "not_run"]
+    complexity_values = [
+        item["complexity_metrics"].get("max_function_complexity")
+        for item in summaries
+        if isinstance(item.get("complexity_metrics"), dict)
+        and item["complexity_metrics"].get("max_function_complexity") is not None
+    ]
+    maintainability_values = [
+        item["maintainability_metrics"].get("max_fta_score")
+        for item in summaries
+        if isinstance(item.get("maintainability_metrics"), dict)
+        and item["maintainability_metrics"].get("max_fta_score") is not None
+    ]
 
     immediate_attention = sorted(
         {item["key"]: item for item in high_security + too_many_security}.values(),
@@ -248,10 +280,16 @@ def aggregate(summaries: list[dict[str, Any]], security_issue_threshold: int) ->
         "complexity": {
             "risk_count": len(complexity_risk),
             "risk_repositories": [item["key"] for item in complexity_risk],
+            "not_run_count": len(complexity_not_run),
+            "not_run_repositories": [item["key"] for item in complexity_not_run],
+            "max_function_complexity": max(complexity_values) if complexity_values else None,
         },
         "maintainability": {
             "pass_count": len(maintainability_pass),
             "pass_repositories": [item["key"] for item in maintainability_pass],
+            "not_run_count": len(maintainability_not_run),
+            "not_run_repositories": [item["key"] for item in maintainability_not_run],
+            "max_fta_score": max(maintainability_values) if maintainability_values else None,
         },
         "tool_installation_gaps": dict(tool_counter.most_common()),
         "recommendation_priority_counts": dict(recommendation_counter),
@@ -299,7 +337,13 @@ def render_markdown(metrics: dict[str, Any]) -> str:
 
     lines.extend(["", "## Complexity And Maintainability", ""])
     lines.append(f"- Complexity risk repos: {metrics['complexity']['risk_count']}")
+    lines.append(f"- Complexity not-run repos: {metrics['complexity'].get('not_run_count', 0)}")
+    if metrics["complexity"].get("max_function_complexity") is not None:
+        lines.append(f"- Max function cyclomatic complexity: {metrics['complexity']['max_function_complexity']}")
     lines.append(f"- Maintainability pass repos: {metrics['maintainability']['pass_count']}")
+    lines.append(f"- Maintainability not-run repos: {metrics['maintainability'].get('not_run_count', 0)}")
+    if metrics["maintainability"].get("max_fta_score") is not None:
+        lines.append(f"- Max FTA maintainability score: {metrics['maintainability']['max_fta_score']}")
 
     lines.extend(["", "## Tool Installation Gaps", ""])
     if metrics["tool_installation_gaps"]:

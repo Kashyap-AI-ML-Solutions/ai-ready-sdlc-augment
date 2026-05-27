@@ -303,7 +303,7 @@ Update the Claude plugin docs so users understand:
 
 - CodeGuard is part of the umbrella standards flow,
 - they can run the dedicated security command when needed,
-- the Claude package still uses `Claude Opus 4.6` / `opus` tier with high effort.
+- the Claude package still uses `Claude Opus 4.7` / `opus` tier with high effort.
 
 ## New Codex Plugin Support
 
